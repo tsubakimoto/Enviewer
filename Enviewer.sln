@@ -5,11 +5,18 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FF588BED-5DC4-46C3-A301-7E70B7EE63B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enviewer", "src\Enviewer\Enviewer.csproj", "{895AAFB3-E709-44C7-B618-EFFCA0355368}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enviewer", "src\Enviewer\Enviewer.csproj", "{895AAFB3-E709-44C7-B618-EFFCA0355368}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{20BCF05C-628D-4C7A-AF41-9EA022D23058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enviewer.Test", "tests\Enviewer.Test\Enviewer.Test.csproj", "{95DCAE8C-99F6-4372-A59D-0D8EF8F58AF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enviewer.Test", "tests\Enviewer.Test\Enviewer.Test.csproj", "{95DCAE8C-99F6-4372-A59D-0D8EF8F58AF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{644FDFC7-775A-4C95-AAAF-B8511A00DF4E}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

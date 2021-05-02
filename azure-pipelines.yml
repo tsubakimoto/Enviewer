@@ -33,7 +33,7 @@ steps:
   displayName: pack
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
+    packagesToPack: 'src/**/*.csproj'
     versioningScheme: 'off'
 - task: NuGetCommand@2
   displayName: push

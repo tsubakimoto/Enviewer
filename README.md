@@ -9,8 +9,8 @@ Simple environment variables viewer
 1. Install the standard Nuget package into your ASP.NET Core application.
 
     ```
-    Package Manager : Install-Package Enviewer -Version 0.1.0
-    CLI : dotnet add package Enviewer --version 0.1.0
+    Package Manager : Install-Package Enviewer -Version 1.0.0
+    CLI : dotnet add package Enviewer --version 1.0.0
     ```
 
 2. In the `Configure` method of `Startup.cs`, insert middleware.

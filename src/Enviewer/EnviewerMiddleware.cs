@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,12 +22,15 @@ namespace Enviewer
         {
             if (httpContext.Request.Path == "/enviewer")
             {
-                var configurations = configuration.AsEnumerable();
+                var configurations = configuration.AsEnumerable().OrderBy(c => c.Key);
                 var content = new StringBuilder();
+                content.Append("<h1>Enviewer</h1>");
+                content.Append("<dl>");
                 foreach (var c in configurations)
                 {
-                    content.AppendLine($"{c.Key} -> {c.Value}");
+                    content.Append($"<dt>{c.Key}</dt><dd>{c.Value}</dd>");
                 }
+                content.Append("</dl>");
                 await httpContext.Response.WriteAsync(content.ToString());
                 return;
             }

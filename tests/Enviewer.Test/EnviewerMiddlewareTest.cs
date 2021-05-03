@@ -30,8 +30,34 @@ namespace Enviewer.Test
                 .StartAsync();
 
             var response = await host.GetTestClient().GetAsync("/enviewer");
-
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            var body = await response.Content.ReadAsStringAsync();
+            Assert.StartsWith("<h1>Enviewer</h1>", body);
+        }
+
+        [Fact]
+        async Task NotEnviewerResponseForOtherUrlRequest()
+        {
+            using var host = await new HostBuilder()
+                .ConfigureWebHost(builder =>
+                {
+                    builder
+                        .UseTestServer()
+                        .ConfigureServices(services =>
+                        {
+
+                        })
+                        .Configure(app =>
+                        {
+                            app.UseEnviewer();
+                        });
+                })
+                .StartAsync();
+
+            var response = await host.GetTestClient().GetAsync("/");
+            var body = await response.Content.ReadAsStringAsync();
+            Assert.False(body.StartsWith("<h1>Enviewer</h1>"));
         }
     }
 }

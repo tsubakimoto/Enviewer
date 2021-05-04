@@ -20,3 +20,12 @@ Simple environment variables viewer
     ```
 
     By accessing `/enviewer` in your browser, you can view all the environment variables registered in `Microsoft.Extensions.Configuration.IConfiguration`.
+
+3. If you want to customize Enviewer endpoint, insert the options.
+
+    ```csharp
+    app.UseEnviewer(options =>
+    {
+        options.Route = "/enviewer-sub";
+    });
+    ```

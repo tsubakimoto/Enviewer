@@ -4,7 +4,9 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
-- main
+ tags:
+   include:
+     - release/*
 
 pool:
   vmImage: ubuntu-latest

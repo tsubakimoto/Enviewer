@@ -1,9 +1,15 @@
 ﻿namespace Enviewer
 {
+    /// <summary>
+    /// The option of Enviewer.
+    /// </summary>
     public class EnviewerOptions
     {
         private static readonly string DEFAULT_ROUTE = "/enviewer";
 
+        /// <summary>
+        /// The constructor of Enviewer.
+        /// </summary>
         public EnviewerOptions()
         {
         }

@@ -10,7 +10,6 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNET_VERSION: '6.0.x'
   BUILD_CONFIGURATION: Release
 
 jobs:
@@ -24,13 +23,13 @@ jobs:
         id: setup
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+          global-json-file: global.json
 
       - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
         run: dotnet build --no-restore --configuration ${{ env.BUILD_CONFIGURATION }}
-        
+
       - name: Test
         run: dotnet test

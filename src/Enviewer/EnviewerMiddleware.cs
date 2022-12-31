@@ -14,12 +14,23 @@ namespace Enviewer
         private readonly RequestDelegate next;
         private readonly EnviewerOptions options;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="next"><see cref="RequestDelegate"/></param>
+        /// <param name="options">Options of Enviewer.</param>
         public EnviewerMiddleware(RequestDelegate next, EnviewerOptions options)
         {
             this.next = next;
             this.options = options ?? new EnviewerOptions();
         }
 
+        /// <summary>
+        /// Processing of middleware.
+        /// </summary>
+        /// <param name="httpContext"><see cref="HttpContext"/></param>
+        /// <param name="configuration"><see cref="IConfiguration"/></param>
+        /// <returns></returns>
         public async Task Invoke(HttpContext httpContext, IConfiguration configuration)
         {
             if (httpContext.Request.Path == options.Route)

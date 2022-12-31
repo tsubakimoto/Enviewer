@@ -31,5 +31,5 @@ jobs:
       - name: Build
         run: dotnet build --no-restore --configuration ${{ env.BUILD_CONFIGURATION }}
 
-      # - name: Test
-      #   run: dotnet test
+      - name: Test
+        run: dotnet test

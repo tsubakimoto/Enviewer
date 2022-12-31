@@ -33,3 +33,12 @@ jobs:
 
       - name: Test
         run: dotnet test
+
+      - name: Pack
+        run: dotnet pack src/Enviewer/Enviewer.csproj --no-build --output ${{ env.DOTNET_ROOT }}/enviewer --configuration ${{ env.BUILD_CONFIGURATION }}
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: enviewer
+          path: ${{ env.DOTNET_ROOT }}/enviewer

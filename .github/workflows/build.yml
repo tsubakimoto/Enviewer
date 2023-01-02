@@ -13,7 +13,7 @@ env:
   BUILD_CONFIGURATION: Release
 
 jobs:
-  build:
+  push_to_nuget:
     runs-on: ubuntu-latest
 
     environment: nuget.org

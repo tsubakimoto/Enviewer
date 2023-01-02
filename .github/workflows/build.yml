@@ -13,8 +13,10 @@ env:
   BUILD_CONFIGURATION: Release
 
 jobs:
-  build:
+  push_to_nuget:
     runs-on: ubuntu-latest
+
+    environment: nuget.org
 
     steps:
       - uses: actions/checkout@v2
@@ -33,3 +35,11 @@ jobs:
 
       - name: Test
         run: dotnet test
+
+      - name: Pack
+        if: github.ref == 'refs/heads/main'
+        run: dotnet pack src/Enviewer/Enviewer.csproj --no-build --output ${{ env.DOTNET_ROOT }}/enviewer --configuration ${{ env.BUILD_CONFIGURATION }}
+
+      - name: Publish
+        if: github.ref == 'refs/heads/main'
+        run: dotnet nuget push ${{ env.DOTNET_ROOT }}/enviewer/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

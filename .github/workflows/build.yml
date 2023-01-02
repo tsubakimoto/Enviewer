@@ -16,6 +16,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    environment: nuget.org
+
     steps:
       - uses: actions/checkout@v2
 
@@ -37,8 +39,5 @@ jobs:
       - name: Pack
         run: dotnet pack src/Enviewer/Enviewer.csproj --no-build --output ${{ env.DOTNET_ROOT }}/enviewer --configuration ${{ env.BUILD_CONFIGURATION }}
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: enviewer
-          path: ${{ env.DOTNET_ROOT }}/enviewer
+      - name: Publish
+        run: dotnet nuget push ${{ env.DOTNET_ROOT }}/enviewer/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

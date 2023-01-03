@@ -27,6 +27,22 @@ jobs:
         with:
           global-json-file: global.json
 
+      - run: echo '${{ steps.setup.outputs.dotnet-version }}'
+
+      - name: Cache nuget packages
+        id: cache-nuget
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+
+      - name: List the state of nuget packages
+        if: ${{ steps.cache-nuget.outputs.cache-hit != 'true' }}
+        continue-on-error: true
+        run: dotnet nuget locals all --list
+
       - name: Restore dependencies
         run: dotnet restore
 

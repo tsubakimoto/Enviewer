@@ -1,4 +1,4 @@
-name: Build
+name: Build and push to nuget.org
 
 on:
   push:
@@ -13,11 +13,9 @@ env:
   BUILD_CONFIGURATION: Release
 
 jobs:
-  push_to_nuget:
+  pack:
     runs-on: ubuntu-latest
-
-    environment: nuget.org
-
+    
     steps:
       - uses: actions/checkout@v2
 
@@ -57,6 +55,23 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: dotnet pack src/Enviewer/Enviewer.csproj --no-build --output ${{ env.DOTNET_ROOT }}/enviewer --configuration ${{ env.BUILD_CONFIGURATION }}
 
+      - name: Upload artifact for push job
+        uses: actions/upload-artifact@v2
+        with:
+          name: enviewer
+          path: ${{ env.DOTNET_ROOT }}/enviewer
+
+  push:
+    needs: pack
+    runs-on: ubuntu-latest
+    environment: nuget.org
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: enviewer
+
       - name: Push
         if: github.ref == 'refs/heads/main'
-        run: dotnet nuget push ${{ env.DOTNET_ROOT }}/enviewer/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

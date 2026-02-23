@@ -29,7 +29,7 @@ jobs:
 
       - name: Cache nuget packages
         id: cache-nuget
-        uses: actions/cache@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.0.3
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}

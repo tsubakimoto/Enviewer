@@ -53,7 +53,11 @@ jobs:
 
       - name: Pack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        run: dotnet pack src/Enviewer/Enviewer.csproj --no-build --output ${{ env.DOTNET_ROOT }}/enviewer --configuration ${{ env.BUILD_CONFIGURATION }}
+        run: |
+            dotnet pack src/Enviewer/Enviewer.csproj \
+                --no-build \
+                --output ${{ env.DOTNET_ROOT }}/enviewer \
+                --configuration ${{ env.BUILD_CONFIGURATION }}
 
       - name: Upload artifact for push job
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -75,5 +79,8 @@ jobs:
           name: enviewer
 
       - name: Push
-        if: github.ref == 'refs/heads/main'
-        run: dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: |
+            dotnet nuget push ./*.nupkg \
+                --api-key ${{ secrets.NUGET_API_KEY }} \
+                --source https://api.nuget.org/v3/index.json \
+                --skip-duplicate

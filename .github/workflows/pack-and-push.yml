@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@de0fac2 # v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Setup .NET
         id: setup
-        uses: actions/setup-dotnet@baa11fb # v5.1.0
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.1.0
         with:
           global-json-file: global.json
 
@@ -29,7 +29,7 @@ jobs:
 
       - name: Cache nuget packages
         id: cache-nuget
-        uses: actions/cache@cdf6c1f # v5.0.3
+        uses: actions/cache@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.0.3
         with:
           path: ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -61,7 +61,7 @@ jobs:
 
       - name: Upload artifact for push job
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        uses: actions/upload-artifact@b7c566a # v6.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: enviewer
           path: ${{ env.DOTNET_ROOT }}/enviewer
@@ -74,7 +74,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@018cc2c # v.6.0.0
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v.6.0.0
         with:
           name: enviewer
 

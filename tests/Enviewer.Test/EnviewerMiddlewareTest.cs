@@ -28,7 +28,7 @@ public class EnviewerMiddlewareTest
     [InlineData(" ", "/enviewer")]
     [InlineData("/enviewer", "/enviewer")]
     [InlineData("/test", "/test")]
-    async Task ReturnsOkForRequestWithOptions(string route, string expectedRoute)
+    async Task ReturnsOkForRequestWithOptions(string? route, string expectedRoute)
     {
         using var host = await new HostBuilder()
             .ConfigureWebHost(builder =>
@@ -59,7 +59,7 @@ public class EnviewerMiddlewareTest
     [InlineData(" ", "/enviewer")]
     [InlineData("/enviewer", "/enviewer")]
     [InlineData("/test", "/test")]
-    async Task ReturnsOkForRequestWithSetupAction(string route, string expectedRoute)
+    async Task ReturnsOkForRequestWithSetupAction(string? route, string expectedRoute)
     {
         using var host = await new HostBuilder()
             .ConfigureWebHost(builder =>

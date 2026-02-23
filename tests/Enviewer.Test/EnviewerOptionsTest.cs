@@ -15,7 +15,7 @@ public class EnviewerOptionsTest
     [InlineData(" ", "/enviewer")]
     [InlineData("/", "/")]
     [InlineData("/hoge", "/hoge")]
-    void SuccessForRouteSetter(string route, string expected)
+    void SuccessForRouteSetter(string? route, string expected)
     {
         EnviewerOptions options = new()
         {

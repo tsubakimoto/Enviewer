@@ -19,8 +19,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+<<<<<<< dependabot/nuget/src/Enviewer/Microsoft.AspNetCore.Routing-2.3.9
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.3.9" />
+=======
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.0" />
+>>>>>>> v1.1.5
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
   </ItemGroup>
 

@@ -1,9 +1,10 @@
 namespace Enviewer.Test;
 
-public class EnviewerMiddlewareTest
+[TestClass]
+public sealed class EnviewerMiddlewareTest
 {
-    [Fact]
-    async Task ReturnsOkForRequestWithoutOptions()
+    [TestMethod]
+    public async Task ReturnsOkForRequestWithoutOptions()
     {
         using var host = await new HostBuilder()
             .ConfigureWebHost(builder =>
@@ -16,19 +17,19 @@ public class EnviewerMiddlewareTest
             .StartAsync();
 
         var response = await host.GetTestClient().GetAsync("/enviewer");
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
         var body = await response.Content.ReadAsStringAsync();
-        Assert.StartsWith("<h1>Enviewer</h1>", body);
+        StringAssert.StartsWith(body, "<h1>Enviewer</h1>");
     }
 
-    [Theory]
-    [InlineData(null, "/enviewer")]
-    [InlineData("", "/enviewer")]
-    [InlineData(" ", "/enviewer")]
-    [InlineData("/enviewer", "/enviewer")]
-    [InlineData("/test", "/test")]
-    async Task ReturnsOkForRequestWithOptions(string? route, string expectedRoute)
+    [TestMethod]
+    [DataRow(null, "/enviewer")]
+    [DataRow("", "/enviewer")]
+    [DataRow(" ", "/enviewer")]
+    [DataRow("/enviewer", "/enviewer")]
+    [DataRow("/test", "/test")]
+    public async Task ReturnsOkForRequestWithOptions(string? route, string expectedRoute)
     {
         using var host = await new HostBuilder()
             .ConfigureWebHost(builder =>
@@ -47,19 +48,19 @@ public class EnviewerMiddlewareTest
             .StartAsync();
 
         var response = await host.GetTestClient().GetAsync(expectedRoute);
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
         var body = await response.Content.ReadAsStringAsync();
-        Assert.StartsWith("<h1>Enviewer</h1>", body);
+        StringAssert.StartsWith(body, "<h1>Enviewer</h1>");
     }
 
-    [Theory]
-    [InlineData(null, "/enviewer")]
-    [InlineData("", "/enviewer")]
-    [InlineData(" ", "/enviewer")]
-    [InlineData("/enviewer", "/enviewer")]
-    [InlineData("/test", "/test")]
-    async Task ReturnsOkForRequestWithSetupAction(string? route, string expectedRoute)
+    [TestMethod]
+    [DataRow(null, "/enviewer")]
+    [DataRow("", "/enviewer")]
+    [DataRow(" ", "/enviewer")]
+    [DataRow("/enviewer", "/enviewer")]
+    [DataRow("/test", "/test")]
+    public async Task ReturnsOkForRequestWithSetupAction(string? route, string expectedRoute)
     {
         using var host = await new HostBuilder()
             .ConfigureWebHost(builder =>
@@ -73,14 +74,14 @@ public class EnviewerMiddlewareTest
             .StartAsync();
 
         var response = await host.GetTestClient().GetAsync(expectedRoute);
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
 
         var body = await response.Content.ReadAsStringAsync();
-        Assert.StartsWith("<h1>Enviewer</h1>", body);
+        StringAssert.StartsWith(body, "<h1>Enviewer</h1>");
     }
 
-    [Fact]
-    async Task NotEnviewerResponseForOtherUrlRequest()
+    [TestMethod]
+    public async Task NotEnviewerResponseForOtherUrlRequest()
     {
         using var host = await new HostBuilder()
             .ConfigureWebHost(builder =>
@@ -94,6 +95,6 @@ public class EnviewerMiddlewareTest
 
         var response = await host.GetTestClient().GetAsync("/");
         var body = await response.Content.ReadAsStringAsync();
-        Assert.False(body.StartsWith("<h1>Enviewer</h1>"));
+        Assert.IsFalse(body.StartsWith("<h1>Enviewer</h1>", StringComparison.Ordinal));
     }
 }

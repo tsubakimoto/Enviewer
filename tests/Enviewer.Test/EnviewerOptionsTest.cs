@@ -1,26 +1,27 @@
 ﻿namespace Enviewer.Test;
 
-public class EnviewerOptionsTest
+[TestClass]
+public sealed class EnviewerOptionsTest
 {
-    [Fact]
-    void SuccessForConstructor()
+    [TestMethod]
+    public void SuccessForConstructor()
     {
-        EnviewerOptions options = new ();
-        Assert.Equal("/enviewer", options.Route);
+        EnviewerOptions options = new();
+        Assert.AreEqual("/enviewer", options.Route);
     }
 
-    [Theory]
-    [InlineData(null, "/enviewer")]
-    [InlineData("", "/enviewer")]
-    [InlineData(" ", "/enviewer")]
-    [InlineData("/", "/")]
-    [InlineData("/hoge", "/hoge")]
-    void SuccessForRouteSetter(string? route, string expected)
+    [TestMethod]
+    [DataRow(null, "/enviewer")]
+    [DataRow("", "/enviewer")]
+    [DataRow(" ", "/enviewer")]
+    [DataRow("/", "/")]
+    [DataRow("/hoge", "/hoge")]
+    public void SuccessForRouteSetter(string? route, string expected)
     {
         EnviewerOptions options = new()
         {
             Route = route
         };
-        Assert.Equal(expected, options.Route);
+        Assert.AreEqual(expected, options.Route);
     }
 }

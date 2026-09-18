@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/samples/">
+    <Project Path="samples/MinimalApiApp/MinimalApiApp.csproj" />
+    <Project Path="samples/RazorPagesApp/RazorPagesApp.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Enviewer/Enviewer.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Enviewer.Test/Enviewer.Test.csproj" />
+  </Folder>
+</Solution>

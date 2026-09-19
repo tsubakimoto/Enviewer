@@ -29,3 +29,7 @@ Simple environment variables viewer
         options.Route = "/enviewer-sub";
     });
     ```
+
+## Samples
+
+See [samples/README.md](samples/README.md) for sample application descriptions and instructions.

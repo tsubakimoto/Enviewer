@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'src/**'
+      - 'src/**/*'
   pull_request:
     branches:
       - main
@@ -17,9 +17,23 @@ env:
 jobs:
   pack:
     runs-on: ubuntu-latest
+    outputs:
+      src_changed: ${{ steps.changes.outputs.src_changed }}
     
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Detect source changes
+        id: changes
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == "push" ]] && git diff --name-only "$GITHUB_EVENT_BEFORE" "$GITHUB_SHA" | grep -q '^src/'; then
+            echo "src_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "src_changed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Setup .NET
         id: setup
@@ -54,7 +68,7 @@ jobs:
         run: dotnet test
 
       - name: Pack
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.changes.outputs.src_changed == 'true' }}
         run: |
             dotnet pack src/Enviewer/Enviewer.csproj \
                 --no-build \
@@ -62,7 +76,7 @@ jobs:
                 --configuration ${{ env.BUILD_CONFIGURATION }}
 
       - name: Upload artifact for push job
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.changes.outputs.src_changed == 'true' }}
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
         with:
           name: enviewer
@@ -70,7 +84,7 @@ jobs:
 
   push:
     needs: pack
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.pack.outputs.src_changed == 'true' }}
     runs-on: ubuntu-latest
     environment: nuget.org
 

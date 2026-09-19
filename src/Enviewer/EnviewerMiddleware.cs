@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace Enviewer
 {
@@ -38,12 +39,15 @@ namespace Enviewer
                 var configurations = configuration.AsEnumerable().OrderBy(c => c.Key);
                 var content = new StringBuilder();
                 content.Append("<h1>Enviewer</h1>");
-                content.Append("<dl>");
+                content.Append("<style>table{border-collapse:collapse;width:100%;}th,td{border:1px solid #d0d7de;padding:8px 12px;text-align:left;vertical-align:top;}th{background-color:#f6f8fa;}code{background-color:#f6f8fa;padding:2px 4px;white-space:pre-wrap;word-break:break-word;}</style>");
+                content.Append("<table><thead><tr><th>Key</th><th>Value</th></tr></thead><tbody>");
                 foreach (var c in configurations)
                 {
-                    content.Append($"<dt>{c.Key}</dt><dd>{c.Value}</dd>");
+                    if (string.IsNullOrWhiteSpace(c.Key))
+                        continue;
+                    content.Append($"<tr><th>{c.Key}</th><td><code>{c.Value}</code></td></tr>");
                 }
-                content.Append("</dl>");
+                content.Append("</tbody></table>");
                 await httpContext.Response.WriteAsync(content.ToString());
                 return;
             }
